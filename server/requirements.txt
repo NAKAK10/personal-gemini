@@ -1,0 +1,9 @@
+flask
+flask-socketio
+google-cloud-aiplatform
+google-api-python-client
+beautifulsoup4
+markdown
+gunicorn
+
+python-dotenv
