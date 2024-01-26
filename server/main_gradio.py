@@ -20,10 +20,13 @@ def random_response(message, history):
         'message': message
     })
 
-    ai = GeminiAI()
-    res = ai.get_anything_chat(history_as_gemini)
-    res = res.replace('•', '  *')
-    return res
+    try:
+        ai = GeminiAI()
+        res = ai.get_anything_chat(history_as_gemini)
+        res = res.replace('•', '  *')
+        return res
+    except Exception as e:
+        return str(e)
 
 
 demo = gr.ChatInterface(random_response)
