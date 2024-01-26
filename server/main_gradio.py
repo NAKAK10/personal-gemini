@@ -26,7 +26,7 @@ def random_response(message, history):
         res = res.replace('•', '  *')
         return res
     except Exception as e:
-        return str(e)
+        return 'エラーが発生しました。\n' + str(e)
 
 
 demo = gr.ChatInterface(random_response)
