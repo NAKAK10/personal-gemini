@@ -51,7 +51,14 @@ REGION = "*****"
 NOTION_API_KEY = "secret_*****"
 ```
 
-## usage
+## usage1
+
+```bash
+cd server
+python main_gradio.py
+```
+
+## usage2
 
 open two terminals
 

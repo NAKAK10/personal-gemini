@@ -5,7 +5,7 @@ https://cloud.google.com/vertex-ai/docs/generative-ai/model-reference/gemini?hl=
 import json
 from google.oauth2 import service_account
 import vertexai
-from vertexai.preview.generative_models import GenerativeModel, Part
+from vertexai.preview.generative_models import GenerativeModel, Part, Content
 from vertexai.preview import generative_models
 from vertexai.generative_models._generative_models import ResponseBlockedError
 
@@ -185,7 +185,24 @@ class GeminiAI():
 
         is_tool = self.model_name == 'gemini-pro'
 
-        history = q if isinstance(q, list) else [Part.from_text(q)]
+        history = []
+        if isinstance(q, list):
+            _model = GenerativeModel(
+                model_name=self.model_name,
+                generation_config=self.config,
+                safety_settings=SAFETY_CONFIG,
+            )
+            add_history: list["Content"] = []
+            for _q in q[:-1]:
+                add_history.append(
+                    Content(parts=[Part.from_text(_q.get('message'))], role=_q.get('role'))
+                )
+            chat = _model.start_chat(
+                history=add_history
+            )
+            history = [Part.from_text(q[-1].get('message'))]
+        else:
+            history = [Part.from_text(q)]
 
         for image in images:
             res_image = self.attached_image(image)
